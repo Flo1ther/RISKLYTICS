@@ -1,0 +1,74 @@
+
+<nav class="navbar">
+  <div class="navbar-left">
+    <h1 class="project-title">Stock & Crypto Risk Analyzer</h1>
+  </div>
+
+  <ul class="navbar-menu">
+    <li><a routerLink="/dashboard">Dashboard</a></li>
+    <li><a routerLink="/compare">Compare</a></li>
+    <li><a routerLink="/about">About</a></li>
+  </ul>
+</nav>
+
+<main class="dashboard">
+
+  <section class="popular-assets">
+    <h2>Popular Assets</h2>
+
+    <div class="asset-cards">
+      <div class="asset-card" *ngFor="let asset of popularAssets">
+        <h3>{{ asset.name }} ({{ asset.symbol }})</h3>
+        <p>Price: ${{ asset.price | number:'1.2-2' }}</p>
+        <div class="chart-placeholder">[Chart]</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="market-table">
+    <h2>Market Overview</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Asset</th>
+          <th>Symbol</th>
+          <th>24h Change</th>
+          <th>Volume</th>
+          <th>Risk</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let asset of marketOverview">
+          <td>{{ asset.name }}</td>
+          <td>{{ asset.symbol }}</td>
+          <td [ngStyle]="{'color': asset.change >= 0 ? 'green' : 'red'}">
+            {{ asset.change >= 0 ? '+' : '−' }}{{ asset.change | number:'1.1-2' }}%
+          </td>
+          <td>{{ asset.volume }}</td>
+          <td>
+            <span *ngIf="asset.risk === 'Low'">Low</span>
+            <span *ngIf="asset.risk === 'Medium'">Meduim</span>
+            <span *ngIf="asset.risk === 'High'">High</span>
+            {{ asset.risk }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="risk-index">
+    <h2>Global Risk Index</h2>
+    <div class="risk-meter">[Risk Gauge Placeholder]</div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>
+    Data from 
+    <a href="https://www.coingecko.com/en/api" target="_blank">CoinGecko API</a> 
+    & <a href="https://www.alphavantage.co/" target="_blank">Alpha Vantage API</a>.
+  </p>
+  <p>© 2025 Myroslav Shevchuk | Dmytro Yablonovskyi</p>
+</footer>
