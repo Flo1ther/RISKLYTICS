@@ -1,11 +1,11 @@
-#Stock & Crypto Risk Analyzer
+# Stock & Crypto Risk Analyzer
 
 An interactive Angular web application for analyzing and visualizing **risk levels and trends** in stocks and cryptocurrencies in real time.  
 The project focuses on helping users make informed investment decisions based on volatility, trends, and correlation data - all using public APIs.
 
 ---
 
-##Features
+## Features
 
 - Live stock and crypto price charts (via public APIs)
 - Volatility and risk index calculation
