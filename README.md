@@ -29,8 +29,8 @@ The project focuses on helping users make informed investment decisions based on
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/<YOUR_USERNAME>/stock-crypto-risk-analyzer.git
-cd stock-crypto-risk-analyzer
+git clone https://github.com/Flo1ther/RISKLYTICS.git
+cd RISKLYTICS
 ```
 ### 2. Install dependencies
 ```bash
@@ -46,8 +46,8 @@ ng serve
 
 ## Authors
 
-Myroslav Shevchuk
-Github: Flo1ther
+- Myroslav Shevchuk
+- Github: Flo1ther
 
-Dmytro Yablonovskyi
-Github: yablonovskydima
+- Dmytro Yablonovskyi
+- Github: yablonovskydima
