@@ -1,0 +1,72 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <h1 class="project-title">Stock & Crypto Risk Analyzer</h1>
+  </div>
+
+  <ul class="navbar-menu">
+    <li><a routerLink="/dashboard">Dashboard</a></li>
+    <li><a routerLink="/compare">Compare</a></li>
+    <li><a routerLink="/about">About</a></li>
+  </ul>
+</nav>
+
+<main class="compare-assets-page">
+  <header class="page-header">
+    <h1>Compare Assets</h1>
+    <p class="subtitle">
+      Analyze and compare key risk indicators for selected stocks and
+      cryptocurrencies in real time.
+    </p>
+  </header>
+
+  <section class="assets-table-section">
+    <table class="assets-table">
+      <thead>
+        <tr>
+          <th (click)="sortBy('name')">Asset</th>
+          <th (click)="sortBy('type')">Type</th>
+          <th (click)="sortBy('price')">Price (USD)</th>
+          <th (click)="sortBy('change24h')">Change (24h)</th>
+          <th (click)="sortBy('volatility')">Volatility</th>
+          <th (click)="sortBy('riskIndex')">Risk Index</th>
+          <th>Trend</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let asset of assets">
+          <td>{{ asset.name }} ({{ asset.symbol }})</td>
+          <td>{{ asset.type }}</td>
+          <td>\${{ asset.price | number : '1.2-2' }}</td>
+          <td
+            [ngClass]="{
+              positive: asset.change24h > 0,
+              negative: asset.change24h < 0
+            }"
+          >
+            {{ asset.change24h }}%
+          </td>
+          <td>{{ asset.volatility }}</td>
+          <td>{{ asset.riskIndex }}</td>
+          <td>
+            <span
+              class="trend"
+              [class.trend-up]="asset.trend === 'up'"
+              [class.trend-down]="asset.trend === 'down'"
+            >
+              {{ asset.trend === 'up' ? 'Rising' : 'Falling' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="charts-preview">
+    <h2>Visualization Preview</h2>
+    <p>
+      Interactive charts for risk, volatility, and trend comparison will be
+      displayed here soon.
+    </p>
+    <div class="chart-placeholder"></div>
+  </section>
+</main>
