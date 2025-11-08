@@ -7,7 +7,14 @@
       <div class="asset-card" *ngFor="let asset of popularAssets">
         <h3>{{ asset.name }} ({{ asset.symbol }})</h3>
         <p>Price: ${{ asset.price | number:'1.2-2' }}</p>
-        <div class="chart-placeholder">[Chart]</div>
+
+        <!-- Графік sparkline -->
+        <div echarts 
+          [options]="assetChartOptions[asset.symbol]" 
+          class="asset-chart"
+          style="height: 150px; width: 100%;">
+      </div>
+
       </div>
     </div>
   </section>
@@ -33,12 +40,7 @@
             {{ asset.change >= 0 ? '+' : '−' }}{{ asset.change | number:'1.1-2' }}%
           </td>
           <td>{{ asset.volume }}</td>
-          <td>
-            <span *ngIf="asset.risk === 'Low'">Low</span>
-            <span *ngIf="asset.risk === 'Medium'">Meduim</span>
-            <span *ngIf="asset.risk === 'High'">High</span>
-            {{ asset.risk }}
-          </td>
+          <td>{{ asset.risk }}</td>
         </tr>
       </tbody>
     </table>
@@ -46,7 +48,11 @@
 
   <section class="risk-index">
     <h2>Global Risk Index</h2>
-    <div class="risk-meter">[Risk Gauge Placeholder]</div>
+    <div echarts 
+         [options]="riskGaugeOption" 
+         class="risk-gauge"
+         style="height: 250px; width: 100%;">
+    </div>
   </section>
 
 </main>

@@ -12,6 +12,7 @@
   .asset-cards {
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
 
     .asset-card {
       background-color: #f4f4f4;
@@ -19,15 +20,26 @@
       border-radius: 8px;
       width: 200px;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
 
-      .chart-placeholder {
-        height: 100px;
-        background-color: #ddd;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      h3 {
+        margin: 0;
+        font-size: 1rem;
+        color: #222;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.9rem;
+      }
+
+      // замість chart-placeholder
+      .asset-chart {
+        height: 100px;       // важливо для ECharts
+        width: 100%;
         border-radius: 4px;
-        margin-top: 0.5rem;
       }
     }
   }
@@ -47,12 +59,19 @@
     }
   }
 
+  // gauge container
   .risk-meter {
     height: 150px;
-    background-color: #ddd;
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .risk-gauge {
+      height: 150px;      // важливо для ECharts gauge
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
   }
 }
