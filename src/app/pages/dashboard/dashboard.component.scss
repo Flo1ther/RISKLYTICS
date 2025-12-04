@@ -1,77 +1,161 @@
+$font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+$bg-primary:       #ffffff;
+$bg-secondary:     #f8f9fc;
+$bg-card:          #ffffff;
+$border-color:     rgba(0, 0, 0, 0.08);
+
+$text-primary:     #1a1a1a;
+$text-secondary:   #555666;
+$text-muted:       #8e8e93;
+
+$green:            #00d4a9;
+$red:              #ff3b5c;
+$blue-crypto:      #0099ff;
+$purple-gradient:  #7c3aed;
+$chart-bg:         linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+
 .dashboard {
+  font-family: $font-family;
+  background: $bg-secondary;
+  min-height: 100vh;
   padding: 2rem;
+  color: $text-primary;
 
-  section {
-    margin-bottom: 2rem;
+  h2 {
+    font-size: 1.55rem;
+    font-weight: 700;
+    margin: 0 0 1.75rem 0;
+    letter-spacing: -0.03em;
+    background: linear-gradient(90deg, $blue-crypto, $purple-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+  }
+}
 
-    h2 {
-      margin-bottom: 1rem;
-    }
+.popular-assets { margin-bottom: 4rem; }
+
+.asset-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.75rem;
+}
+
+.asset-card {
+  background: $bg-card;
+  border-radius: 18px;
+  padding: 1.75rem;
+  border: 1.5px solid $border-color;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 153, 255, 0.12);
+    border-color: rgba(0, 153, 255, 0.3);
   }
 
-  .asset-cards {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-
-    .asset-card {
-      background-color: #f4f4f4;
-      padding: 1rem;
-      border-radius: 8px;
-      width: 200px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-
-      h3 {
-        margin: 0;
-        font-size: 1rem;
-        color: #222;
-      }
-
-      p {
-        margin: 0;
-        font-size: 0.9rem;
-      }
-
-      // замість chart-placeholder
-      .asset-chart {
-        height: 100px;       // важливо для ECharts
-        width: 100%;
-        border-radius: 4px;
-      }
-    }
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+    color: $text-primary;
   }
+
+  p {
+    font-size: 1.65rem;
+    font-weight: 800;
+    margin: 0.35rem 0 1rem;
+    color: $text-primary;
+  }
+
+  .asset-chart {
+    margin-top: 1rem;
+    border-radius: 14px;
+    overflow: hidden;
+    background: $chart-bg;
+    height: 140px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+.market-table {
+  margin-bottom: 4rem;
 
   table {
     width: 100%;
-    border-collapse: collapse;
-
-    th, td {
-      padding: 0.75rem;
-      border-bottom: 1px solid #ccc;
-      text-align: left;
-    }
-
-    th {
-      background-color: #eee;
-    }
+    background: $bg-card;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.05);
+    border: 1.5px solid $border-color;
+    border-collapse: separate;
+    border-spacing: 0;
   }
 
-  // gauge container
-  .risk-meter {
-    height: 150px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  thead {
+    background: linear-gradient(90deg, rgba(0, 153, 255, 0.08), rgba(124, 58, 237, 0.06));
+    color: #444;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
 
-    .risk-gauge {
-      height: 150px;      // важливо для ECharts gauge
-      width: 100%;
-      max-width: 400px;
-      margin: 0 auto;
+    th { padding: 1.25rem 1.5rem; text-align: left; }
+  }
+
+  tbody {
+    tr:hover { background: rgba(0, 153, 255, 0.06); }
+
+    td {
+      padding: 1.35rem 1.5rem;
+      border-bottom: 1px solid $border-color;
+      font-weight: 500;
+    }
+
+    td:nth-child(3) {
+      font-weight: 700;
+      font-size: 1.02rem;
+      color: $green;
+
+      &.negative,
+      &[style*="red"] { color: $red !important; }
     }
   }
+}
+
+.risk-index {
+  max-width: 720px;
+  margin: 2rem auto 4rem;
+
+  h2 { text-align: center; }
+
+  .risk-gauge {
+    background: $chart-bg;
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 50px rgba(0, 153, 255, 0.15);
+    border: 1.5px solid rgba(0, 153, 255, 0.2);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard { padding: 1.5rem; }
+  .asset-cards { grid-template-columns: 1fr; }
+}
+
+.asset-card,
+.market-table,
+.risk-index {
+  animation: fadeInUp 0.7s ease backwards;
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) { animation-delay: $i * 0.1s; }
+  }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
