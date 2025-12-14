@@ -1,11 +1,30 @@
 <main>
   <div class="container">
+
+    <!-- Пошук крипти -->
+    <div class="search-box">
+      <input type="text" [(ngModel)]="cryptoSearchSymbol" placeholder="Введіть символ крипти (наприклад BTC, XRP)" />
+      <button (click)="searchCrypto()">Шукати крипту</button>
+    </div>
+
+    <!-- Пошук стоку -->
+    <div class="search-box">
+      <input type="text" [(ngModel)]="stockSearchSymbol" placeholder="Введіть символ стоку (наприклад AAPL, GOOGL)" />
+      <button (click)="searchStock()">Шукати сток</button>
+    </div>
+
+    <!-- Графіки топ-5 -->
     <div class="chart-box">
       <div echarts [options]="cryptoOptions" class="chart"></div>
     </div>
 
     <div class="chart-box">
       <div echarts [options]="stockOptions" class="chart"></div>
+    </div>
+
+    <!-- Графік пошуку -->
+    <div class="chart-box" *ngIf="searchOptions">
+      <div echarts [options]="searchOptions" class="chart"></div>
     </div>
 
   </div>
