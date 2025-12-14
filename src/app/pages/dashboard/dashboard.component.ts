@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit {
   riskGaugeOption: EChartsOption = {};
   loading = true;
 
-  private alphaVantageApiKey = environment.alphaVantageApiKey;;
+  private alphaVantageApiKey = environment.alphaVantageApiKey;
 
   constructor(private http: HttpClient) {}
 
