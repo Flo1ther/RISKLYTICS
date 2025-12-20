@@ -27,9 +27,6 @@ export class OverviewComponent implements OnInit {
     this.loadTopCryptoMarketCap();
   }
 
-  /* =======================
-     CRYPTO — MARKET CAP
-     ======================= */
   private loadTopCryptoMarketCap(): void {
     this.http.get<any[]>(
       'https://api.coingecko.com/api/v3/coins/markets',
@@ -42,7 +39,6 @@ export class OverviewComponent implements OnInit {
         }
       }
     ).subscribe(coins => {
-
       const pieData = coins.map(coin => ({
         name: coin.symbol.toUpperCase(),
         value: coin.market_cap
@@ -55,18 +51,12 @@ export class OverviewComponent implements OnInit {
     });
   }
 
-  /* =======================
-     PIE / DONUT OPTIONS
-     ======================= */
   private buildPieChartOptions(data: any[], titleText: string): EChartsOption {
     return {
       title: {
         text: titleText,
         left: 'center',
-        textStyle: {
-          color: '#fff',
-          fontSize: 16
-        }
+        textStyle: { color: '#fff', fontSize: 16 }
       },
       tooltip: {
         trigger: 'item',
@@ -80,12 +70,10 @@ export class OverviewComponent implements OnInit {
       series: [
         {
           type: 'pie',
-          radius: ['45%', '70%'], // donut
-          center: ['50%', '55%'],
+          radius: ['45%', '70%'],
+          center: ['50%', '50%'],
           data,
-          label: {
-            color: '#fff'
-          },
+          label: { color: '#fff' },
           emphasis: {
             itemStyle: {
               shadowBlur: 15,
@@ -98,9 +86,6 @@ export class OverviewComponent implements OnInit {
     };
   }
 
-  /* =======================
-     FORMAT NUMBERS
-     ======================= */
   private formatNumber(value: number): string {
     if (value >= 1e12) return `$${(value / 1e12).toFixed(2)}T`;
     if (value >= 1e9)  return `$${(value / 1e9).toFixed(2)}B`;

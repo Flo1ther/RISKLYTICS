@@ -4,17 +4,14 @@ $border-color: rgba(0, 0, 0, 0.08);
 $blue-crypto: #0099ff;
 $purple-gradient: #7c3aed;
 
-/* =========================
-   LAYOUT
-   ========================= */
 .container {
   max-width: 1600px;
   margin: 0 auto 5rem;
   padding: 0 2rem;
   display: flex;
-  justify-content: center;     /* 🔑 Центруємо вміст по горизонталі */
+  justify-content: center;
   align-items: center;
-  min-height: 100vh;           /* щоб зайняти всю висоту екрану (опціонально) */
+  min-height: 100vh;
 
   @media (min-width: 1024px) {
     padding: 0 2rem;
@@ -25,10 +22,9 @@ $purple-gradient: #7c3aed;
   }
 }
 
-/* Обмежуємо максимальну ширину картки, щоб вона не розтягувалась на весь екран */
 .chart-box {
   width: 100%;
-  max-width: 900px;            /* 🔑 Обмежуємо ширину чарту */
+  max-width: 900px;
   background: $bg-card;
   border-radius: 20px;
   overflow: hidden;
@@ -43,9 +39,6 @@ $purple-gradient: #7c3aed;
   }
 }
 
-/* =========================
-   CHART CONTAINER
-   ========================= */
 .chart {
   height: 480px;
   width: 100%;
@@ -76,9 +69,6 @@ $purple-gradient: #7c3aed;
   }
 }
 
-/* =========================
-   RESPONSIVE
-   ========================= */
 @media (max-width: 1024px) {
   .chart {
     height: 420px;
@@ -95,6 +85,6 @@ $purple-gradient: #7c3aed;
   }
 
   .chart-box {
-    max-width: 100%; /* на дуже маленьких екранах дозволяємо зайняти майже всю ширину */
+    max-width: 100%;
   }
 }
