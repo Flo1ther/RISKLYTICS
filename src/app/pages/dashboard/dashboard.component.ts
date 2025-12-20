@@ -42,9 +42,6 @@ export class DashboardComponent implements OnInit {
     this.loadCryptoData();
   }
 
-  /* =======================
-     LOAD CRYPTO DATA
-     ======================= */
   private loadCryptoData(): void {
     this.http.get<any[]>(
       'https://api.coingecko.com/api/v3/coins/markets',
@@ -89,9 +86,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  /* =======================
-     SPARKLINE CHART
-     ======================= */
   private buildSparklineChart(data: number[], color: string): EChartsOption {
     const min = Math.min(...data);
     const max = Math.max(...data);
@@ -142,9 +136,6 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  /* =======================
-     GLOBAL RISK GAUGE
-     ======================= */
   private updateGlobalRisk(): void {
     const valid = this.popularAssets.filter(a => a.sparkline.length > 1);
 
@@ -169,9 +160,6 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  /* =======================
-     RISK LEVEL
-     ======================= */
   private getRiskLevel(change: number): string {
     const abs = Math.abs(change);
     if (abs < 1) return 'Low';
