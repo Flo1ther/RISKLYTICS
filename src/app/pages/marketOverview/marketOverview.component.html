@@ -1,7 +1,23 @@
 <main>
-  <div class="container">
-    <div class="chart-box" *ngIf="cryptoOptions && cryptoOptions.series">
-      <div echarts [options]="cryptoOptions" class="chart"></div>
+  <div class="container column">
+
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="btc, eth, xrp..."
+        [(ngModel)]="searchSymbol"
+        (keyup.enter)="searchCrypto()"
+      />
+      <button (click)="searchCrypto()">Search</button>
     </div>
+
+    <div class="chart-box" *ngIf="cryptoPriceOptions?.series">
+      <div echarts [options]="cryptoPriceOptions" class="chart"></div>
+    </div>
+
+    <div class="chart-box" *ngIf="topMarketCapOptions?.series">
+      <div echarts [options]="topMarketCapOptions" class="chart"></div>
+    </div>
+
   </div>
 </main>

@@ -69,6 +69,43 @@ $purple-gradient: #7c3aed;
   }
 }
 
+.container.column {
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.search-box {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  input {
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: #0f172a;
+    color: #fff;
+    width: 260px;
+  }
+
+  button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, #38bdf8, #2563eb);
+    color: white;
+    font-weight: 600;
+    transition: 0.3s;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(56,189,248,0.4);
+    }
+  }
+}
+
+
 @media (max-width: 1024px) {
   .chart {
     height: 420px;
