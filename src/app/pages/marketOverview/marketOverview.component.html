@@ -15,9 +15,33 @@
       <div echarts [options]="cryptoPriceOptions" class="chart"></div>
     </div>
 
+    <div class="trade-box" *ngIf="currentCoinSymbol">
+      <p class="price">
+        Current price: <strong>${{ currentPrice | number:'1.2-2' }}</strong>
+      </p>
+
+      <input
+        type="number"
+        min="0"
+        placeholder="Amount"
+        [(ngModel)]="tradeAmount"
+      />
+
+      <div class="actions">
+        <button class="buy" (click)="buy()">Buy</button>
+        <button class="sell" (click)="sell()">Sell</button>
+      </div>
+    </div>
+
+
     <div class="chart-box" *ngIf="topMarketCapOptions?.series">
       <div echarts [options]="topMarketCapOptions" class="chart"></div>
     </div>
 
   </div>
+
+  <div class="flash-message" [class.show]="flashMessageVisible">
+    {{ flashMessageText }}
+  </div>
+
 </main>
