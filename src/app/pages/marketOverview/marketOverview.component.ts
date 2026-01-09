@@ -6,6 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 import { EChartsOption } from 'echarts';
 
+interface PortfolioItem {
+  amount: number;
+  totalUsd: number;
+}
+
+type Portfolio = Record<string, PortfolioItem>;
+
 @Component({
   selector: 'app-market-overview',
   standalone: true,
@@ -30,6 +37,7 @@ export class OverviewComponent implements OnInit {
   tradeAmount: number = 0;
   flashMessageText = '';
   flashMessageVisible = false;
+
 
   constructor(private http: HttpClient) {}
   
@@ -159,15 +167,17 @@ export class OverviewComponent implements OnInit {
         tooltip: {
           trigger: 'axis',
           formatter: (p: any) =>
-            `${p[0].axisValue}<br/><strong>$${p[0].data[1].toFixed(2)}</strong>`
+            `${p[0].axisValue}<br/><strong>$${p[0].data.toFixed(2)}</strong>`
         },
         xAxis: {
           type: 'category',
           data: data.map(d => d[0]),
+          boundaryGap: false,
           axisLabel: { color: '#cbd5e1' }
         },
         yAxis: {
           type: 'value',
+          scale: true, // 🔥
           axisLabel: {
             color: '#cbd5e1',
             formatter: (v: number) => `$${v}`
@@ -176,10 +186,11 @@ export class OverviewComponent implements OnInit {
         series: [
           {
             type: 'line',
-            data,
-            smooth: true,
+            data: data.map(d => d[1]),
+            smooth: 0.4,
             showSymbol: false,
-            lineStyle: { width: 3 }
+            lineStyle: { width: 2 },
+            areaStyle: { opacity: 0.3 }
           }
         ],
         backgroundColor: 'transparent'
@@ -191,37 +202,67 @@ export class OverviewComponent implements OnInit {
     if (!this.currentCoinSymbol || this.tradeAmount <= 0) return;
 
     const portfolio = this.getPortfolio();
-    const current = portfolio[this.currentCoinSymbol] || 0;
+    const price = this.currentPrice;
 
-    portfolio[this.currentCoinSymbol] = current + this.tradeAmount;
+    const current = portfolio[this.currentCoinSymbol] || {
+      amount: 0,
+      totalUsd: 0
+    };
+
+    const buyValue = this.tradeAmount * price;
+
+    portfolio[this.currentCoinSymbol] = {
+      amount: current.amount + this.tradeAmount,
+      totalUsd: Number((current.totalUsd + buyValue).toFixed(3))
+    };
+
     this.savePortfolio(portfolio);
 
-    this.showFlash(`Bought ${this.tradeAmount} ${this.currentCoinSymbol.toUpperCase()}`);
+    this.showFlash(
+      `Bought ${this.tradeAmount} ${this.currentCoinSymbol.toUpperCase()} for $${buyValue.toFixed(2)}`
+    );
   }
 
   sell(): void {
     if (!this.currentCoinSymbol || this.tradeAmount <= 0) return;
 
     const portfolio = this.getPortfolio();
-    const current = portfolio[this.currentCoinSymbol] || 0;
+    const current = portfolio[this.currentCoinSymbol];
 
-    if (this.tradeAmount > current) {
+    if (!current || this.tradeAmount > current.amount) {
       this.showFlash('Not enough asset to sell');
       return;
     }
 
-    portfolio[this.currentCoinSymbol] = current - this.tradeAmount;
+    const ratio = this.tradeAmount / current.amount;
+    const usdToRemove = current.totalUsd * ratio;
+
+    const newAmount = current.amount - this.tradeAmount;
+    const newTotalUsd = current.totalUsd - usdToRemove;
+
+    if (newAmount === 0) {
+      delete portfolio[this.currentCoinSymbol];
+    } else {
+      portfolio[this.currentCoinSymbol] = {
+        amount: newAmount,
+        totalUsd: newTotalUsd
+      };
+    }
+
     this.savePortfolio(portfolio);
 
-    this.showFlash(`Sold ${this.tradeAmount} ${this.currentCoinSymbol.toUpperCase()}`);
+    this.showFlash(
+      `Sold ${this.tradeAmount} ${this.currentCoinSymbol.toUpperCase()}`
+    );
   }
 
 
-  private getPortfolio(): Record<string, number> {
+
+  private getPortfolio(): Portfolio {
     return JSON.parse(localStorage.getItem('portfolio') || '{}');
   }
 
-  private savePortfolio(portfolio: Record<string, number>): void {
+  private savePortfolio(portfolio: Portfolio): void {
     localStorage.setItem('portfolio', JSON.stringify(portfolio));
   }
 }

@@ -1,25 +1,137 @@
+@import '../../../styles.scss';
+$heading-gradient: linear-gradient(90deg, $blue-crypto, $purple-gradient);
+$link-color: $blue-crypto;
+
+.about-page {
+  font-family: $font-family;
+  background: $bg-secondary;
+  min-height: 100vh;
+  padding: 4rem 1rem 6rem;
+  color: $text-primary;
+}
 
 .about-container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 2rem;
-  line-height: 1.6;
+  width: 100%;
+  background: $bg-card;
+  border-radius: 20px;
+  padding: 3rem 3.5rem;
+  border: 1.5px solid $border-color;
+  box-shadow: $shadow-soft;
+  animation: fadeInUp 0.8s ease backwards;
+
+  @media (max-width: 768px) {
+    padding: 2.5rem 2rem;
+    border-radius: 18px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 2rem 1.5rem;
+  }
 }
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+.about-page h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  background: $heading-gradient;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1.2;
+
+  @media (max-width: 768px) {
+    font-size: 2.4rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2.1rem;
+  }
 }
 
-h2 {
-  margin-top: 1.5rem;
-  color: #007acc;
+.about-page h2 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: $text-primary;
+  margin: 2.5rem 0 1.2rem;
+  position: relative;
+  padding-left: 1rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 60%;
+    background: $heading-gradient;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.7rem;
+  }
 }
 
-ul {
-  padding-left: 1.2rem;
+.about-page p {
+  font-size: 1.15rem;
+  line-height: 1.75;
+  color: $text-secondary;
+  margin-bottom: 1.5rem;
+
+  strong {
+    color: $text-primary;
+    font-weight: 600;
+  }
 }
 
-li {
-  margin-bottom: 0.5rem;
+.about-page ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 1.5rem 0;
+
+  li {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: $text-secondary;
+    padding: 0.75rem 0 0.75rem 2rem;
+    position: relative;
+
+    &::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: $green;
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+  }
+}
+
+.about-container {
+  animation-delay: 0.2s;
+}
+
+.about-container {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: $shadow-hover;
+    border-color: rgba(0, 153, 255, 0.25);
+  }
+}
+
+@media (max-width: 480px) {
+  .about-page {
+    padding: 3rem 1rem 5rem;
+  }
+
+  .about-page ul li {
+    padding-left: 1.8rem;
+    font-size: 1.05rem;
+  }
 }

@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 import { EChartsOption } from 'echarts';
-import * as echarts from 'echarts';
 
 interface CryptoData {
   name: string;
@@ -89,47 +88,52 @@ export class DashboardComponent implements OnInit {
   private buildSparklineChart(data: number[], color: string): EChartsOption {
     const min = Math.min(...data);
     const max = Math.max(...data);
-    const padding = (max - min) * 0.05;
+    const isStable = (max - min) / min < 0.01;
 
     return {
-      backgroundColor: '#121212',
+      backgroundColor: 'transparent',
+
       tooltip: {
         trigger: 'axis',
-        formatter: (params: any) => `$${params[0].value.toFixed(2)}`,
-        axisPointer: { type: 'cross' },
-        backgroundColor: '#222',
-        textStyle: { color: '#fff' }
+        formatter: (p: any) =>
+          `$${p[0].data.toFixed(isStable ? 3 : 2)}`,
+        axisPointer: { type: 'line' }
       },
+
+      grid: {
+        left: 4,
+        right: 4,
+        top: 6,
+        bottom: 6
+      },
+
       xAxis: {
         type: 'category',
-        data: data.map((_, i) => i + 1),
+        data: data.map((_, i) => i),
         boundaryGap: false,
-        axisLabel: { color: '#aaa' },
-        axisLine: { lineStyle: { color: '#555' } }
+        show: false
       },
+
       yAxis: {
         type: 'value',
-        min: min - padding,
-        max: max + padding,
-        axisLabel: {
-          color: '#aaa',
-          formatter: (v: number) => `$${v.toFixed(2)}`
-        },
-        splitLine: { lineStyle: { color: '#333' } }
+        scale: !isStable,
+        min: isStable ? 0.995 : undefined,
+        max: isStable ? 1.005 : undefined,
+        show: false
       },
-      grid: { left: 30, right: 20, top: 20, bottom: 30 },
+
       series: [
         {
           type: 'line',
-          data: data.map(v => Number(v.toFixed(2))),
-          smooth: true,
+          data,
+          smooth: 0.35,
           showSymbol: false,
-          lineStyle: { color, width: 2 },
+          lineStyle: {
+            color,
+            width: 1.8
+          },
           areaStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: color + '88' },
-              { offset: 1, color: color + '11' }
-            ])
+            opacity: 0.25
           }
         }
       ]
