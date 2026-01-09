@@ -1,28 +1,26 @@
-@import '../../../styles.scss';
-
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: $navbar-height;
-  background: rgba(255, 255, 255, 0.85);
+  height: var(--navbar-height);
+  background: var(--navbar-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1.5px solid $border-color;
+  border-bottom: 1.5px solid var(--border-color);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  font-family: $font-family;
+  font-family: var(--font-family);
 
   .project-title {
     font-size: 1.55rem;
     font-weight: 700;
     letter-spacing: -0.03em;
-    background: linear-gradient(90deg, $blue-crypto, $purple-gradient);
+    background: var(--text-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -38,7 +36,7 @@
 
     li {
       a {
-        color: $text-primary;
+        color: var(--navbar-link-color);
         text-decoration: none;
         font-weight: 600;
         font-size: 1.05rem;
@@ -53,13 +51,13 @@
           left: 0;
           width: 0;
           height: 3px;
-          background: linear-gradient(90deg, $blue-crypto, $purple-gradient);
+          background: linear-gradient(90deg, var(--blue-crypto), var(--purple-gradient));
           border-radius: 2px;
           transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         &:hover {
-          color: $blue-crypto;
+          color: var(--navbar-link-hover);
         }
 
         &:hover::after {
@@ -67,7 +65,7 @@
         }
 
         &.active {
-          color: $blue-crypto;
+          color: var(--blue-crypto);
 
           &::after {
             width: 100%;
@@ -79,9 +77,11 @@
 
   @media (max-width: 768px) {
     padding: 0 1.5rem;
+
     .navbar-menu {
       gap: 1.5rem;
     }
+
     .project-title {
       font-size: 1.4rem;
     }

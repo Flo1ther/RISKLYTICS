@@ -1,14 +1,14 @@
 @import '../../../styles.scss';
 
 .footer {
+  background-color: var(--bg-primary);
   margin-top: auto;
-  background: $bg-card;
-  border-top: 1.5px solid $border-color;
+  border-top: 1.5px solid var(--border-color);
   padding: 2rem;
   text-align: center;
   font-size: 0.95rem;
-  color: $text-secondary;
-  min-height: $footer-height;
+  color: var(--text-secondary);
+  min-height: var(--footer-height);
 
   p {
     margin: 0.75rem 0;
@@ -19,13 +19,13 @@
   }
 
   a {
-    color: $blue-crypto;
+    color: var(--blue-crypto);
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
 
     &:hover {
-      color: $purple-gradient;
+      color: var(--purple-gradient);
       text-decoration: underline;
     }
   }
@@ -33,14 +33,16 @@
   p:last-child {
     margin-top: 1.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid $border-color;
-    color: $text-muted;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
     font-size: 0.9rem;
   }
 
   @media (max-width: 768px) {
     padding: 2rem 1.5rem;
   }
+
+  flex-shrink: 0;
 }
 
 html, body {
@@ -54,8 +56,4 @@ body {
 
 .dashboard {
   flex: 1 0 auto;
-}
-
-.footer {
-  flex-shrink: 0;
 }

@@ -1,11 +1,11 @@
 @import '../../../styles.scss';
 
 main {
-  font-family: $font-family;
-  background: $bg-secondary;
+  font-family: var(--font-family);
+  background: var(--bg-secondary);
   min-height: 100vh;
   padding: 2rem 1rem;
-  color: $text-primary;
+  color: var(--text-primary);
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
@@ -30,19 +30,19 @@ main {
     flex: 1;
     padding: 1rem 1.25rem;
     font-size: 1.1rem;
-    border: 1.5px solid $border-color;
+    border: 1.5px solid var(--border-color);
     border-radius: 12px;
-    background: $bg-card;
-    color: $text-primary;
+    background: var(--bg-card);
+    color: var(--text-primary);
     transition: all 0.25s ease;
 
     &::placeholder {
-      color: $text-muted;
+      color: var(--text-muted);
     }
 
     &:focus {
       outline: none;
-      border-color: $blue-crypto;
+      border-color: var(--blue-crypto);
       box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.15);
     }
   }
@@ -51,7 +51,7 @@ main {
     padding: 0 1.75rem;
     font-size: 1.05rem;
     font-weight: 600;
-    background: linear-gradient(90deg, $blue-crypto, $purple-gradient);
+    background: var(--text-gradient);
     color: white;
     border: none;
     border-radius: 12px;
@@ -70,16 +70,16 @@ main {
 }
 
 .chart-box {
-  background: $bg-card;
+  background: var(--bg-card);
   border-radius: 18px;
   padding: 1.5rem;
-  border: 1.5px solid $border-color;
-  box-shadow: $shadow-soft;
+  border: 1.5px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
   transition: all 0.3s ease;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: $shadow-hover;
+    box-shadow: var(--shadow-hover);
     border-color: rgba(0, 153, 255, 0.25);
   }
 
@@ -92,11 +92,11 @@ main {
 }
 
 .trade-box {
-  background: $bg-card;
+  background: var(--bg-card);
   border-radius: 18px;
   padding: 2rem 2.5rem;
-  border: 1.5px solid $border-color;
-  box-shadow: $shadow-soft;
+  border: 1.5px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
   max-width: 520px;
   margin: 0 auto;
   text-align: center;
@@ -104,22 +104,21 @@ main {
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: $shadow-hover;
+    box-shadow: var(--shadow-hover);
   }
 
   .price {
     font-size: 1.4rem;
     margin: 0 0 1.75rem;
-    color: $text-secondary;
+    color: var(--text-secondary);
 
     strong {
       font-size: 2.1rem;
       font-weight: 800;
-      color: $text-primary;
-      background: linear-gradient(90deg, $blue-crypto, $purple-gradient);
+      color: transparent;
+      background: var(--text-gradient);
       -webkit-background-clip: text;
       background-clip: text;
-      color: transparent;
     }
   }
 
@@ -127,15 +126,15 @@ main {
     width: 100%;
     padding: 1.1rem;
     font-size: 1.25rem;
-    border: 1.5px solid $border-color;
+    border: 1.5px solid var(--border-color);
     border-radius: 12px;
     margin-bottom: 1.5rem;
     text-align: center;
-    background: $bg-secondary;
+    background: var(--bg-secondary);
 
     &:focus {
       outline: none;
-      border-color: $blue-crypto;
+      border-color: var(--blue-crypto);
       box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.15);
     }
   }
@@ -155,22 +154,22 @@ main {
       transition: all 0.3s ease;
 
       &.buy {
-        background: $green;
+        background: var(--green);
         color: white;
 
         &:hover {
-          background: darken($green, 8%);
+          background: rgba(0, 212, 169, 0.85);
           transform: translateY(-2px);
           box-shadow: 0 8px 24px rgba(0, 212, 169, 0.3);
         }
       }
 
       &.sell {
-        background: $red;
+        background: var(--red);
         color: white;
 
         &:hover {
-          background: darken($red, 8%);
+          background: rgba(255, 59, 92, 0.85);
           transform: translateY(-2px);
           box-shadow: 0 8px 24px rgba(255, 59, 92, 0.3);
         }
@@ -178,6 +177,7 @@ main {
     }
   }
 }
+
 
 .flash-message {
   position: fixed;
@@ -201,6 +201,7 @@ main {
   }
 }
 
+
 .chart-box,
 .trade-box,
 .search-box {
@@ -217,6 +218,7 @@ main {
   from { opacity: 0; transform: translateY(30px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
 
 @media (max-width: 768px) {
   main { padding: 1.5rem 1rem; }
