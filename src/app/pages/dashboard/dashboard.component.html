@@ -18,23 +18,6 @@
     </div>
   </section>
 
-  <section class="popular-assets">
-    <h2>Popular Stocks</h2>
-
-    <div class="asset-cards">
-      <div class="asset-card" *ngFor="let stock of popularStocks">
-        <h3>{{ stock.name }} ({{ stock.symbol }})</h3>
-        <p>Price: ${{ stock.price | number:'1.2-2' }}</p>
-
-        <div echarts 
-          [options]="stockChartOptions[stock.symbol]" 
-          class="asset-chart"
-          style="height: 150px; width: 100%;">
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="market-table">
     <h2>Market Overview</h2>
 
@@ -57,33 +40,6 @@
           </td>
           <td>{{ asset.volume }}</td>
           <td>{{ asset.risk }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section class="market-table">
-    <h2>Stock Market Overview</h2>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Stock</th>
-          <th>Symbol</th>
-          <th>24h Change</th>
-          <th>Volume</th>
-          <th>Risk</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let stock of stockOverview">
-          <td>{{ stock.name }}</td>
-          <td>{{ stock.symbol }}</td>
-          <td [ngStyle]="{'color': stock.change >= 0 ? 'green' : 'red'}">
-            {{ stock.change >= 0 ? '+' : '' }}{{ stock.change | number:'1.1-2' }}%
-          </td>
-          <td>{{ stock.volume }}</td>
-          <td>{{ stock.risk }}</td>
         </tr>
       </tbody>
     </table>

@@ -1,27 +1,89 @@
+@import '../../../styles.scss';
+
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $navbar-height;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1.5px solid $border-color;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  z-index: 1000;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: #1f1f1f;
-  color: #fff;
+  justify-content: space-between;
+  padding: 0 2rem;
+  font-family: $font-family;
 
   .project-title {
-    font-size: 1.5rem;
+    font-size: 1.55rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    background: linear-gradient(90deg, $blue-crypto, $purple-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    user-select: none;
   }
 
   .navbar-menu {
     list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
-    gap: 1rem;
+    gap: 2.5rem;
 
-    li a {
-      color: #fff;
-      text-decoration: none;
+    li {
+      a {
+        color: $text-primary;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.05rem;
+        padding: 0.5rem 0;
+        position: relative;
+        transition: color 0.3s ease;
 
-      &:hover {
-        color: #ffcc00;
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 0;
+          height: 3px;
+          background: linear-gradient(90deg, $blue-crypto, $purple-gradient);
+          border-radius: 2px;
+          transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        &:hover {
+          color: $blue-crypto;
+        }
+
+        &:hover::after {
+          width: 100%;
+        }
+
+        &.active {
+          color: $blue-crypto;
+
+          &::after {
+            width: 100%;
+          }
+        }
       }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 1.5rem;
+    .navbar-menu {
+      gap: 1.5rem;
+    }
+    .project-title {
+      font-size: 1.4rem;
     }
   }
 }
