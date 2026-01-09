@@ -177,7 +177,7 @@ export class OverviewComponent implements OnInit {
         },
         yAxis: {
           type: 'value',
-          scale: true, // 🔥
+          scale: true,
           axisLabel: {
             color: '#cbd5e1',
             formatter: (v: number) => `$${v}`

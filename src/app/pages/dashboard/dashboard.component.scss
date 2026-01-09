@@ -1,18 +1,18 @@
 @import '../../../styles.scss';
 
 .dashboard {
-  font-family: $font-family;
-  background: $bg-secondary;
+  font-family: var(--font-family);
+  background: var(--bg-secondary);
   min-height: 100vh;
   padding: 2rem;
-  color: $text-primary;
+  color: var(--text-primary);
 
   h2 {
     font-size: 1.55rem;
     font-weight: 700;
     margin: 0 0 1.75rem 0;
     letter-spacing: -0.03em;
-    background: linear-gradient(90deg, $blue-crypto, $purple-gradient);
+    background: var(--text-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -29,16 +29,16 @@
 }
 
 .asset-card {
-  background: $bg-card;
+  background: var(--bg-card);
   border-radius: 18px;
   padding: 1.75rem;
-  border: 1.5px solid $border-color;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+  border: 1.5px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
   &:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 40px rgba(0, 153, 255, 0.12);
+    box-shadow: var(--shadow-hover);
     border-color: rgba(0, 153, 255, 0.3);
   }
 
@@ -46,21 +46,21 @@
     font-size: 1.25rem;
     font-weight: 600;
     margin: 0 0 0.5rem;
-    color: $text-primary;
+    color: var(--text-primary);
   }
 
   p {
     font-size: 1.65rem;
     font-weight: 800;
     margin: 0.35rem 0 1rem;
-    color: $text-primary;
+    color: var(--text-primary);
   }
 
   .asset-chart {
     margin-top: 1rem;
     border-radius: 14px;
     overflow: hidden;
-    background: $chart-bg;
+    background: var(--chart-bg);
     height: 140px;
     border: 1px solid rgba(255, 255, 255, 0.08);
   }
@@ -71,11 +71,11 @@
 
   table {
     width: 100%;
-    background: $bg-card;
+    background: var(--bg-card);
     border-radius: 18px;
     overflow: hidden;
-    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.05);
-    border: 1.5px solid $border-color;
+    box-shadow: var(--shadow-soft);
+    border: 1.5px solid var(--border-color);
     border-collapse: separate;
     border-spacing: 0;
   }
@@ -96,17 +96,17 @@
 
     td {
       padding: 1.35rem 1.5rem;
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid var(--border-color);
       font-weight: 500;
     }
 
     td:nth-child(3) {
       font-weight: 700;
       font-size: 1.02rem;
-      color: $green;
+      color: var(--green);
 
       &.negative,
-      &[style*="red"] { color: $red !important; }
+      &[style*="red"] { color: var(--red) !important; }
     }
   }
 }
@@ -118,7 +118,7 @@
   h2 { text-align: center; }
 
   .risk-gauge {
-    background: $chart-bg;
+    background: var(--chart-bg);
     border-radius: 24px;
     padding: 2.5rem;
     box-shadow: 0 20px 50px rgba(0, 153, 255, 0.15);

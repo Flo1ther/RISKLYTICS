@@ -1,9 +1,21 @@
 <nav class="navbar">
   <div class="project-title">Crypto Risk Analyzer</div>
+
   <ul class="navbar-menu">
     <li><a routerLink="/dashboard">Dashboard</a></li>
     <li><a routerLink="/overview">Market Overview</a></li>
     <li><a routerLink="/compare">Compare</a></li>
     <li><a routerLink="/about">About</a></li>
+
+    <li class="theme-toggle">
+      <button 
+        class="theme-btn" 
+        (click)="toggleTheme()" 
+        [attr.aria-label]="'Switch to ' + (isDarkTheme ? 'light' : 'dark') + ' theme'"
+      >
+        <span class="icon sun" [class.active]="!isDarkTheme">☀</span>
+        <span class="icon moon" [class.active]="isDarkTheme">☾</span>
+      </button>
+    </li>
   </ul>
 </nav>
