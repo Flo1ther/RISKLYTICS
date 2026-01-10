@@ -40,7 +40,7 @@ export class CompareComponent implements OnInit {
   totalPortfolioUsd = 0;
   loading = true;
 
-  timeframe: 7 | 30 | 90 = 30;
+  timeframe: 7 | 30 = 30;
   maxCompareAssets = 3;
 
   constructor(private http: HttpClient) {}
@@ -57,7 +57,6 @@ export class CompareComponent implements OnInit {
     this.loadMarketData(symbols, portfolio);
   }
 
-  // 🔹 MAIN MARKET DATA (1 CALL)
   private loadMarketData(symbols: string[], portfolio: Portfolio): void {
     this.http.get<any[]>(
       'https://api.coingecko.com/api/v3/coins/markets',
@@ -102,7 +101,6 @@ export class CompareComponent implements OnInit {
     });
   }
 
-  // 🥧 PIE
   private buildAllocationChart(): void {
     this.allocationChart = {
       title: {
@@ -129,7 +127,6 @@ export class CompareComponent implements OnInit {
     };
   }
 
-  // 📈 PERFORMANCE COMPARE
   private buildPerformanceCompare(): void {
     const coins = this.assets.slice(0, this.maxCompareAssets);
 
@@ -183,7 +180,7 @@ export class CompareComponent implements OnInit {
   }
 
   changeTimeframe(days: number): void {
-    if (days !== 7 && days !== 30 && days !== 90) return;
+    if (days !== 7 && days !== 30) return;
 
     this.timeframe = days;
     this.buildPerformanceCompare();
