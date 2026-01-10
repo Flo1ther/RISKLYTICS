@@ -1,60 +1,39 @@
-<main class="compare-assets-page">
-  <header class="page-header">
-    <h1>Compare Assets</h1>
-    <p class="subtitle">
-      Analyze and compare key risk indicators for selected stocks and
-      cryptocurrencies in real time.
-    </p>
-  </header>
+<section *ngIf="!loading && assets.length; else empty">
+  
+  <div class="total">
+    <span class="label">Total Portfolio Value</span>
+    <span class="value">
+      ${{ totalPortfolioUsd | number:'1.0-2' }}
+    </span>
+  </div>
 
-  <section class="assets-table-section">
-    <table class="assets-table">
-      <thead>
-        <tr>
-          <th (click)="sortBy('name')">Asset</th>
-          <th (click)="sortBy('type')">Type</th>
-          <th (click)="sortBy('price')">Price (USD)</th>
-          <th (click)="sortBy('change24h')">Change (24h)</th>
-          <th (click)="sortBy('volatility')">Volatility</th>
-          <th (click)="sortBy('riskIndex')">Risk Index</th>
-          <th>Trend</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let asset of assets">
-          <td>{{ asset.name }} ({{ asset.symbol }})</td>
-          <td>{{ asset.type }}</td>
-          <td>\${{ asset.price | number : '1.2-2' }}</td>
-          <td
-            [ngClass]="{
-              positive: asset.change24h > 0,
-              negative: asset.change24h < 0
-            }"
-          >
-            {{ asset.change24h }}%
-          </td>
-          <td>{{ asset.volatility }}</td>
-          <td>{{ asset.riskIndex }}</td>
-          <td>
-            <span
-              class="trend"
-              [class.trend-up]="asset.trend === 'up'"
-              [class.trend-down]="asset.trend === 'down'"
-            >
-              {{ asset.trend === 'up' ? 'Rising' : 'Falling' }}
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+  <div class="chart">
+    <div echarts [options]="allocationChart" class="pie"></div>
+  </div>
 
-  <section class="charts-preview">
-    <h2>Visualization Preview</h2>
-    <p>
-      Interactive charts for risk, volatility, and trend comparison will be
-      displayed here soon.
-    </p>
-    <div class="chart-placeholder"></div>
-  </section>
-</main>
+  <div class="list">
+    <div class="row header">
+      <span>Asset</span>
+      <span>Amount</span>
+      <span>Value</span>
+      <span>24h</span>
+    </div>
+
+    <div class="row" *ngFor="let a of assets">
+      <span>{{ a.symbol }}</span>
+      <span>{{ a.amount }}</span>
+      <span>${{ a.valueUsd | number:'1.0-2' }}</span>
+      <span
+        [class.pos]="a.change24h >= 0"
+        [class.neg]="a.change24h < 0"
+      >
+        {{ a.change24h | number:'1.2-2' }}%
+      </span>
+    </div>
+  </div>
+
+</section>
+
+<ng-template #empty>
+  <p>Your portfolio is empty</p>
+</ng-template>

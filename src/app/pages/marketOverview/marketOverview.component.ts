@@ -6,12 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 import { EChartsOption } from 'echarts';
 
-interface PortfolioItem {
-  amount: number;
-  totalUsd: number;
-}
-
-type Portfolio = Record<string, PortfolioItem>;
+type Portfolio = Record<string, number>;
 
 @Component({
   selector: 'app-market-overview',
@@ -202,59 +197,52 @@ export class OverviewComponent implements OnInit {
     if (!this.currentCoinSymbol || this.tradeAmount <= 0) return;
 
     const portfolio = this.getPortfolio();
-    const price = this.currentPrice;
+    const currentAmount = portfolio[this.currentCoinSymbol] || 0;
 
-    const current = portfolio[this.currentCoinSymbol] || {
-      amount: 0,
-      totalUsd: 0
-    };
-
-    const buyValue = this.tradeAmount * price;
-
-    portfolio[this.currentCoinSymbol] = {
-      amount: current.amount + this.tradeAmount,
-      totalUsd: Number((current.totalUsd + buyValue).toFixed(3))
-    };
+    portfolio[this.currentCoinSymbol] = currentAmount + this.tradeAmount;
 
     this.savePortfolio(portfolio);
 
+    const usdValue = this.tradeAmount * this.currentPrice;
+
     this.showFlash(
-      `Bought ${this.tradeAmount} ${this.currentCoinSymbol.toUpperCase()} for $${buyValue.toFixed(2)}`
+      `Bought ${this.tradeAmount} ${this.currentCoinSymbol.toUpperCase()} for $${usdValue.toFixed(2)}`
     );
+
+    this.tradeAmount = 0;
   }
+
 
   sell(): void {
     if (!this.currentCoinSymbol || this.tradeAmount <= 0) return;
 
     const portfolio = this.getPortfolio();
-    const current = portfolio[this.currentCoinSymbol];
+    const currentAmount = portfolio[this.currentCoinSymbol] || 0;
 
-    if (!current || this.tradeAmount > current.amount) {
+    if (this.tradeAmount > currentAmount) {
       this.showFlash('Not enough asset to sell');
       return;
     }
 
-    const ratio = this.tradeAmount / current.amount;
-    const usdToRemove = current.totalUsd * ratio;
-
-    const newAmount = current.amount - this.tradeAmount;
-    const newTotalUsd = current.totalUsd - usdToRemove;
+    const newAmount = currentAmount - this.tradeAmount;
 
     if (newAmount === 0) {
       delete portfolio[this.currentCoinSymbol];
     } else {
-      portfolio[this.currentCoinSymbol] = {
-        amount: newAmount,
-        totalUsd: newTotalUsd
-      };
+      portfolio[this.currentCoinSymbol] = newAmount;
     }
 
     this.savePortfolio(portfolio);
 
+    const usdValue = this.tradeAmount * this.currentPrice;
+
     this.showFlash(
-      `Sold ${this.tradeAmount} ${this.currentCoinSymbol.toUpperCase()}`
+      `Sold ${this.tradeAmount} ${this.currentCoinSymbol.toUpperCase()} for $${usdValue.toFixed(2)}`
     );
+
+    this.tradeAmount = 0;
   }
+
 
 
 
