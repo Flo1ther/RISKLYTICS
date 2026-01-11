@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 import { EChartsOption } from 'echarts';
 import { forkJoin } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 interface PortfolioAssetView {
   id: string;
@@ -17,10 +18,12 @@ interface PortfolioAssetView {
 
 type Portfolio = Record<string, number>;
 
+
+
 @Component({
   selector: 'app-compare-assets',
   standalone: true,
-  imports: [CommonModule, NgxEchartsModule],
+  imports: [CommonModule, NgxEchartsModule,  FormsModule],
   providers: [
     {
       provide: NGX_ECHARTS_CONFIG,
@@ -59,7 +62,7 @@ export class CompareComponent implements OnInit {
 
   private loadMarketData(symbols: string[], portfolio: Portfolio): void {
     this.http.get<any[]>(
-      'https://api.coingecko.com/api/v3/coins/markets',
+      '/api/api/v3/coins/markets',
       {
         params: {
           vs_currency: 'usd',
@@ -133,7 +136,7 @@ export class CompareComponent implements OnInit {
     forkJoin(
       coins.map(c =>
         this.http.get<any>(
-          `https://api.coingecko.com/api/v3/coins/${c.id}/market_chart`,
+          `/api/api/v3/coins/${c.id}/market_chart`,
           {
             params: {
               vs_currency: 'usd',

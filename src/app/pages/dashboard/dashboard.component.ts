@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
 
   private loadCryptoData(): void {
     this.http.get<any[]>(
-      'https://api.coingecko.com/api/v3/coins/markets',
+      '/api/api/v3/coins/markets',
       {
         params: {
           vs_currency: 'usd',
