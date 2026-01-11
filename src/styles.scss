@@ -1,6 +1,3 @@
-/* styles.scss */
-
-// --- Light theme ---
 :root {
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
@@ -31,8 +28,6 @@
   --navbar-link-hover: var(--blue-crypto);
 }
 
-/* --- Dark theme ---
-   активується, коли на <html> стоїть клас .dark-theme */
 .dark-theme {
   --bg-primary: #121212;
   --bg-secondary: #1e1e2f;
