@@ -1,0 +1,52 @@
+<section *ngIf="!loading && assets.length; else empty">
+  
+  <div class="total">
+    <span class="label">Total Portfolio Value</span>
+    <span class="value">
+      ${{ totalPortfolioUsd | number:'1.0-2' }}
+    </span>
+  </div>
+
+  <div class="chart">
+    <div echarts [options]="allocationChart" class="pie"></div>
+  </div>
+
+  <div class="list">
+    <div class="row header">
+      <span>Asset</span>
+      <span>Amount</span>
+      <span>Value</span>
+      <span>24h</span>
+    </div>
+
+    <div class="row" *ngFor="let a of assets">
+      <span>{{ a.symbol }}</span>
+      <span>{{ a.amount }}</span>
+      <span>${{ a.valueUsd | number:'1.0-2' }}</span>
+      <span
+        [class.pos]="a.change24h >= 0"
+        [class.neg]="a.change24h < 0"
+      >
+        {{ a.change24h | number:'1.2-2' }}%
+      </span>
+    </div>
+  </div>
+
+  <div class="timeframe">
+    <button
+      *ngFor="let d of [7, 30]"
+      (click)="changeTimeframe(d)"
+      [class.active]="timeframe === d"
+    >
+      {{ d }}D
+    </button>
+  </div>
+
+  <div class="chart">
+    <div echarts [options]="performanceChart" class="line"></div>
+  </div>
+</section>
+
+<ng-template #empty>
+  <p>Your portfolio is empty</p>
+</ng-template>

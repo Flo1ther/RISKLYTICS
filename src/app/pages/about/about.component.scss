@@ -1,0 +1,134 @@
+@import '../../../styles.scss';
+
+.about-page {
+  font-family: var(--font-family);
+  background: var(--bg-secondary);
+  min-height: 100vh;
+  padding: 4rem 1rem 6rem;
+  color: var(--text-primary);
+
+  h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    background: var(--text-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1.2;
+
+    @media (max-width: 768px) {
+      font-size: 2.4rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 2.1rem;
+    }
+  }
+
+  h2 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 2.5rem 0 1.2rem;
+    position: relative;
+    padding-left: 1rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 5px;
+      height: 60%;
+      background: var(--text-gradient);
+      border-radius: 4px;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 1.7rem;
+    }
+  }
+
+  p {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+
+    strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 1.5rem 0;
+
+    li {
+      font-size: 1.15rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      padding: 0.75rem 0 0.75rem 2rem;
+      position: relative;
+
+      &::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--green);
+        font-weight: bold;
+        font-size: 1.3rem;
+      }
+    }
+  }
+}
+
+.about-container {
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  background: var(--bg-card);
+  border-radius: 20px;
+  padding: 3rem 3.5rem;
+  border: 1.5px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
+  animation: fadeInUp 0.8s ease backwards;
+  animation-delay: 0.2s;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(0, 153, 255, 0.25);
+  }
+
+  @media (max-width: 768px) {
+    padding: 2.5rem 2rem;
+    border-radius: 18px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-page {
+    padding: 3rem 1rem 5rem;
+  }
+
+  .about-page ul li {
+    padding-left: 1.8rem;
+    font-size: 1.05rem;
+  }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
