@@ -32,6 +32,19 @@
     </div>
   </div>
 
+  <div class="timeframe">
+    <button
+      *ngFor="let d of [7, 30]"
+      (click)="changeTimeframe(d)"
+      [class.active]="timeframe === d"
+    >
+      {{ d }}D
+    </button>
+  </div>
+
+  <div class="chart">
+    <div echarts [options]="performanceChart" class="line"></div>
+  </div>
 </section>
 
 <ng-template #empty>

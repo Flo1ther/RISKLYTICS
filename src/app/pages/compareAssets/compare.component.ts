@@ -3,8 +3,11 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 import { EChartsOption } from 'echarts';
+import { forkJoin } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 interface PortfolioAssetView {
+  id: string;
   symbol: string;
   amount: number;
   price: number;
@@ -15,10 +18,12 @@ interface PortfolioAssetView {
 
 type Portfolio = Record<string, number>;
 
+
+
 @Component({
   selector: 'app-compare-assets',
   standalone: true,
-  imports: [CommonModule, NgxEchartsModule],
+  imports: [CommonModule, NgxEchartsModule,  FormsModule],
   providers: [
     {
       provide: NGX_ECHARTS_CONFIG,
@@ -31,9 +36,15 @@ type Portfolio = Record<string, number>;
 export class CompareComponent implements OnInit {
 
   assets: PortfolioAssetView[] = [];
+
   allocationChart: EChartsOption = {};
-  loading = true;
+  performanceChart: EChartsOption = {};
+
   totalPortfolioUsd = 0;
+  loading = true;
+
+  timeframe: 7 | 30 = 30;
+  maxCompareAssets = 3;
 
   constructor(private http: HttpClient) {}
 
@@ -51,11 +62,10 @@ export class CompareComponent implements OnInit {
 
   private loadMarketData(symbols: string[], portfolio: Portfolio): void {
     this.http.get<any[]>(
-      'https://api.coingecko.com/api/v3/coins/markets',
+      '/api/api/v3/coins/markets',
       {
         params: {
           vs_currency: 'usd',
-          order: 'market_cap_desc',
           per_page: '250',
           page: '1',
           price_change_percentage: '24h'
@@ -72,12 +82,12 @@ export class CompareComponent implements OnInit {
         0
       );
 
-
       this.assets = portfolioCoins.map(c => {
         const amount = portfolio[c.symbol.toLowerCase()];
         const valueUsd = amount * c.current_price;
 
         return {
+          id: c.id,
           symbol: c.symbol.toUpperCase(),
           amount,
           price: c.current_price,
@@ -88,6 +98,8 @@ export class CompareComponent implements OnInit {
       });
 
       this.buildAllocationChart();
+      this.buildPerformanceCompare();
+
       this.loading = false;
     });
   }
@@ -96,13 +108,11 @@ export class CompareComponent implements OnInit {
     this.allocationChart = {
       title: {
         text: 'Portfolio Allocation',
-        left: 'center',
-        textStyle: { fontSize: 16 }
+        left: 'center'
       },
       tooltip: {
         trigger: 'item',
-        formatter: (p: any) =>
-          `${p.name}: ${p.value.toFixed(2)}%`
+        formatter: (p: any) => `${p.name}: ${p.value.toFixed(2)}%`
       },
       series: [
         {
@@ -118,6 +128,73 @@ export class CompareComponent implements OnInit {
         }
       ]
     };
+  }
+
+  private buildPerformanceCompare(): void {
+    const coins = this.assets.slice(0, this.maxCompareAssets);
+
+    forkJoin(
+      coins.map(c =>
+        this.http.get<any>(
+          `/api/api/v3/coins/${c.id}/market_chart`,
+          {
+            params: {
+              vs_currency: 'usd',
+              days: this.timeframe.toString()
+            }
+          }
+        )
+      )
+    ).subscribe(results => {
+
+      const series = results.map((res, i) => ({
+        name: coins[i].symbol,
+        type: 'line'as const,
+        data: this.normalize(res.prices),
+        smooth: 0.35,
+        showSymbol: false
+      }));
+
+      this.performanceChart = {
+        title: {
+          text: 'Performance Compare (%)',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'axis',
+          formatter: (p: any) =>
+            p.map((i: any) =>
+              `${i.seriesName}: ${i.data}%`
+            ).join('<br/>')
+        },
+        xAxis: {
+          type: 'category',
+          data: results[0].prices.map((p: any) =>
+            new Date(p[0]).toLocaleDateString()
+          )
+        },
+        yAxis: {
+          type: 'value',
+          axisLabel: { formatter: '{value}%' }
+        },
+        series
+      };
+    });
+  }
+
+  changeTimeframe(days: number): void {
+    if (days !== 7 && days !== 30) return;
+
+    this.timeframe = days;
+    this.buildPerformanceCompare();
+  }
+
+
+  private normalize(prices: [number, number][]): number[] {
+    const base = prices[0][1];
+    return prices.map(p =>
+      Number((((p[1] / base) - 1) * 100).toFixed(2))
+    );
   }
 
   private getPortfolio(): Portfolio {

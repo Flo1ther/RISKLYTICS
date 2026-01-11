@@ -52,7 +52,7 @@ export class OverviewComponent implements OnInit {
 
   private loadTopCryptoMarketCap(): void {  
     this.http.get<any[]>(
-      'https://api.coingecko.com/api/v3/coins/markets',
+      '/api/api/v3/coins/markets',
       {
         params: {
           vs_currency: 'usd',
@@ -104,7 +104,7 @@ export class OverviewComponent implements OnInit {
     if (!symbol) return;
 
     this.http.get<any[]>(
-      'https://api.coingecko.com/api/v3/coins/markets',
+      '/api/api/v3/coins/markets',
       {
         params: {
           vs_currency: 'usd',
@@ -131,7 +131,7 @@ export class OverviewComponent implements OnInit {
 
   private fetchMarketChart(coinId: string, symbol: string): void {
     this.http.get<any>(
-      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart`,
+      `/api/api/v3/coins/${coinId}/market_chart`,
       {
         params: {
           vs_currency: 'usd',
